@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="/css/all.css">
+  <link rel="preconnect" href="/https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap">
+  <style>
+    html {
+      background-image: url('/images/background.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: bottom;
+    }
+  </style>
+  <title>Library App</title>
+</head>
+<body>
+  <div class="container">
+    <div class="side-bar">
+      <div class="wraper">
+        <div class="header">Library App</div>
+        <div class="card-body">
+          <div class="card-header">Books</div>
+          <hr>
+          <div class="card-content">
+            <div class ='list-container'>
+              <ul class="rendered-list">  
+              </ul>
+              <a href="#" class="btn add-book-btn">Add Book</a>
+            </div>
+            <form class="add-book-form" action="">
+              <input type="text" class="title" placeholder="Title">
+              <input type="text" class="author" placeholder="Author">
+              <input type="number" class="pages" placeholder="Pages">
+              <select class="status">
+                <option value="Not Read">Not read</option>
+                <option value="Read">Read</option>
+              </select>
+              <div class="form-footer">
+                <a href="#" class="btn go-back-btn"><i class="fas fa-undo-alt"></i></a>
+                <button type="submit" class="btn form-submit-btn"><i class="fas fa-plus"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="book-list">
+      </div>
+    </div>
+  </div>
+  <script src="/script.js"></script>
+</body>
+</html>
