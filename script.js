@@ -113,13 +113,13 @@ function bookFooter(status) {
 	div.classList.add('footer');
 	if (status == 'Read') {
 	  div.innerHTML = `
-		  <a class="btn status-btn read" href="">Read</a>
-		  <a class="btn delete-btn" href=""><i class="icon fas fa-trash-alt"></i></a> `;
+		  <a class="btn status-btn read" href="#">Read</a>
+		  <a class="btn delete-btn" href="#"><i class="icon fas fa-trash-alt"></i></a> `;
 	  return div
 	}
 	div.innerHTML = `
-		<a class="btn status-btn not-read" href="">Not Read</a>
-		<a class="btn delete-btn" href=""><i class="icon fas fa-trash-alt"></i></a>`;
+		<a class="btn status-btn not-read" href="#">Not Read</a>
+		<a class="btn delete-btn" href="#"><i class="icon fas fa-trash-alt"></i></a>`;
 	return div;
 }
 
