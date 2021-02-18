@@ -92,18 +92,18 @@ function bookInfo(book) {
 	const div = document.createElement('div');
 	div.classList.add('info')
 	div.innerHTML = `
-	<div>
-	  <p>Title</p>
-	  <p>${book.title}</p>
-	</div>
-	<div>
-	  <p>Author</p>
-	  <p>${book.author}</p>
-	</div>
-	<div>
-	  <p>Pages</p>
-	  <p>${book.pages}</p>
-	</div>
+		<div>
+			<p>Title</p>
+			<p>${book.title}</p>
+		</div>
+		<div>
+			<p>Author</p>
+			<p>${book.author}</p>
+		</div>
+		<div>
+			<p>Pages</p>
+			<p>${book.pages}</p>
+		</div>
 	`;
 	return div;
 }
@@ -113,13 +113,13 @@ function bookFooter(status) {
 	div.classList.add('footer');
 	if (status == 'Read') {
 	  div.innerHTML = `
-	    <a class="btn status-btn read" href="#">Read</a>
-	    <a class="btn delete-btn" href="#"><i class="icon fas fa-trash-alt"></i></a>`;
+		  <a class="btn status-btn read" href="">Read</a>
+		  <a class="btn delete-btn" href=""><i class="icon fas fa-trash-alt"></i></a> `;
 	  return div
 	}
 	div.innerHTML = `
-	<a class="btn status-btn not-read" href="#">Not Read</a>
-	<a class="btn delete-btn" href="#"><i class="icon fas fa-trash-alt"></i></a>`;
+		<a class="btn status-btn not-read" href="">Not Read</a>
+		<a class="btn delete-btn" href=""><i class="icon fas fa-trash-alt"></i></a>`;
 	return div;
 }
 
