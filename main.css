@@ -58,6 +58,7 @@ html,body {
 
 .wraper {
 	top:150px;
+	position: -webkit-sticky;
 	position:sticky;
 	width:100%;
 	padding:10px;
