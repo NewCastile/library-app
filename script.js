@@ -4,22 +4,22 @@ const FORM = document.querySelector('.add-book-form');
 const LIST = document.querySelector('.list-container');
 
 window.addEventListener('load', function (e) {
-	if (!sessionStorage.getItem("LIBRARY")) {
+	if (!localStorage.getItem("LIBRARY")) {
 		let firstBook = new Book('Marijn Haverbeke', '448', 'Read', 'Eloquent JavaScript');
 		myLibrary.push(firstBook);
 		render();
 		save();
 		displayAll();
-	} else if (sessionStorage.getItem("LIBRARY")) {
+	} else if (localStorage.getItem("LIBRARY")) {
 		render();
 		displayAll();
 	}	
 })
 
 function readStorage() {
-	if(!sessionStorage.getItem("LIBRARY")) return false
-	if(JSON.parse(sessionStorage.getItem("LIBRARY")).length == 0) return false;
-	let currentStorage = JSON.parse(sessionStorage.getItem("LIBRARY")).map(object => {
+	if(!localStorage.getItem("LIBRARY")) return false
+	if(JSON.parse(localStorage.getItem("LIBRARY")).length == 0) return false;
+	let currentStorage = JSON.parse(localStorage.getItem("LIBRARY")).map(object => {
 		const {author, pages, status, title, id} = object;
 		const book = new Book(author, pages, status, title, id);
 		return book;
@@ -28,16 +28,16 @@ function readStorage() {
 }
 
 function generateId() {
-	if (sessionStorage.getItem("LIBRARY") === null || undefined) return 1;
-	if (JSON.parse(sessionStorage.getItem("LIBRARY")).length === 0) return 1;
-	const bookList = JSON.parse(sessionStorage.getItem("LIBRARY"));
+	if (localStorage.getItem("LIBRARY") === null || undefined) return 1;
+	if (JSON.parse(localStorage.getItem("LIBRARY")).length === 0) return 1;
+	const bookList = JSON.parse(localStorage.getItem("LIBRARY"));
 	const  lastBook = bookList[bookList.length -1];
 	const id = parseInt(lastBook.id) + 1;
 	return id;
 }
 
 function save() {
-	sessionStorage.setItem("LIBRARY", JSON.stringify(myLibrary));
+	localStorage.setItem("LIBRARY", JSON.stringify(myLibrary));
 }
 
 function displayAll() {
@@ -77,10 +77,10 @@ function createBook(book) {
 	const div = document.createElement('div');
 	div.classList.add('book');
 	[div.dataset.author,
-		div.dataset.pages,
-		div.dataset.status,
-		div.dataset.title,
-		div.dataset.id] = Object.values(book);
+	 div.dataset.pages,
+	 div.dataset.status,
+	 div.dataset.title,
+	 div.dataset.id] = Object.values(book);
 	const info = bookInfo(book);
 	const footer = bookFooter(book.status);
 	div.appendChild(info);
@@ -92,18 +92,18 @@ function bookInfo(book) {
 	const div = document.createElement('div');
 	div.classList.add('info')
 	div.innerHTML = `
-		<div>
-			<p>Title</p>
-			<p>${book.title}</p>
-		</div>
-		<div>
-			<p>Author</p>
-			<p>${book.author}</p>
-		</div>
-		<div>
-			<p>Pages</p>
-			<p>${book.pages}</p>
-		</div>
+	<div>
+	  <p>Title</p>
+	  <p>${book.title}</p>
+	</div>
+	<div>
+	  <p>Author</p>
+	  <p>${book.author}</p>
+	</div>
+	<div>
+	  <p>Pages</p>
+	  <p>${book.pages}</p>
+	</div>
 	`;
 	return div;
 }
@@ -112,12 +112,14 @@ function bookFooter(status) {
 	const div = document.createElement('div');
 	div.classList.add('footer');
 	if (status == 'Read') {
-		div.innerHTML = `<a class="btn status-btn read" href="#">Read</a>
-						 <a class="btn delete-btn" href="#"><i class="icon fas fa-trash-alt"></i></a>`;
-		return div
+	  div.innerHTML = `
+	    <a class="btn status-btn read" href="#">Read</a>
+	    <a class="btn delete-btn" href="#"><i class="icon fas fa-trash-alt"></i></a>`;
+	  return div
 	}
-	div.innerHTML = `<a class="btn status-btn not-read" href="#">Not Read</a>
-					 <a class="btn delete-btn" href="#"><i class="icon fas fa-trash-alt"></i></a>`;
+	div.innerHTML = `
+	<a class="btn status-btn not-read" href="#">Not Read</a>
+	<a class="btn delete-btn" href="#"><i class="icon fas fa-trash-alt"></i></a>`;
 	return div;
 }
 
