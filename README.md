@@ -8,7 +8,7 @@ The essential elements are:
 
 - The form, that allows the user to add books.
 - The delete button, placed in every book item shown that removes the book in both list.
-- The status button, also placed in every book item that handles the read status of the book.
+- The status button, that handles the read status of the book.
 
 
 ## localStorage
