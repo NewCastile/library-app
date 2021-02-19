@@ -1,4 +1,5 @@
 # Library-App. See Demo [Here](https://newcastile.github.io/library-app/)
+
 Library App project taken from The Odin Project. The main goal was to grasp to concepts around
 objects and constructors. Everything is based in an array of books (objects) created 
 by taking the user input, by which we create, delete and update the elements displayed
