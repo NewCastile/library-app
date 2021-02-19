@@ -4,25 +4,12 @@
 	font-size:1em;
 }
 
-@media (max-width: 626px) {
-	.book-list {
-	align-items: center;
-	}
-}
-
 html,body {
 	height:100%;
 	width:100%;
 	margin:0;
 	padding:0;
 	overflow-x: hidden;
-}
-
-.btn {
-	color:#fff;
-	margin:10px 0;
-	padding:5px 10px;
-	border:none;
 }
 
 .container {
@@ -101,13 +88,6 @@ html,body {
 	padding: 5px;
 }
 
-.add-book-btn {
-	width: 30%;
-	text-align: center;
-	text-decoration:none;
-	background-color:#4caf50;
-}
-
 .add-book-form {
 	width:100%;
 	display:none;
@@ -131,14 +111,6 @@ html,body {
 	align-items:center;
 }
 
-.form-submit-btn {
-	background-color:#4caf50;
-}
-
-.go-back-btn i {
-	color:#969696;
-}
-
 hr {
 	width:90%;
 }
@@ -152,6 +124,12 @@ hr {
 	background-color:#ecf0f1;
 	margin:30px auto;
 	padding:20px 40px;
+}
+
+@media (max-width: 626px) {
+	.book-list {
+	align-items: center;
+	}
 }
 
 .book {
@@ -174,6 +152,28 @@ hr {
 .book .info > * {
 	padding-right:10px;
 	flex-basis:100%;
+}
+
+.btn {
+	color:#fff;
+	margin:10px 0;
+	padding:5px 10px;
+	border:none;
+}
+
+.add-book-btn {
+	width: 30%;
+	text-align: center;
+	text-decoration:none;
+	background-color:#4caf50;
+}
+
+.form-submit-btn {
+	background-color:#4caf50;
+}
+
+.go-back-btn i {
+	color:#969696;
 }
 
 .delete-btn {
