@@ -1,7 +1,9 @@
 let myLibrary = readStorage() || [];
-const CARD = document.querySelector('.card-content');
-const FORM = document.querySelector('.add-book-form');
-const LIST = document.querySelector('.list-container');
+const cardContent = document.querySelector('.card-content');
+const form = document.querySelector('.add-book-form');
+const bookList = document.querySelector('.book-list');
+const bookItems = document.querySelector('.rendered-list');
+const goBackBtn = document.querySelector('.go-back-btn');
 
 window.addEventListener('load', function (e) {
 	if (!localStorage.getItem("LIBRARY")) {
@@ -26,36 +28,39 @@ function readStorage() {
 	});
 	return currentStorage;
 }
-
-function generateId() {
-	if (localStorage.getItem("LIBRARY") === null || undefined) return 1;
-	if (JSON.parse(localStorage.getItem("LIBRARY")).length === 0) return 1;
-	const bookList = JSON.parse(localStorage.getItem("LIBRARY"));
-	const  lastBook = bookList[bookList.length -1];
-	const id = parseInt(lastBook.id) + 1;
-	return id;
-}
-
 function save() {
-	localStorage.setItem("LIBRARY", JSON.stringify(myLibrary));
+	sessionStorage.setItem("LIBRARY", JSON.stringify(myLibrary));
 }
 
-function displayAll() {
+function render() {
+	bookList.innerHTML = "";
+	bookItems.innerHTML = "";
 	myLibrary.forEach(book => {
-		document.querySelector('.book-list').appendChild(createBook(book));
+		bookList.appendChild(createBook(book));
+		createItem(book)
 	})
 }
 
-function addBook(book) {
-	document.querySelector('.book-list').appendChild(createBook(book));
+HTMLElement.prototype.show = function() {
+	this.style.display = "flex";
 }
 
-function Book(author, pages, status, title, id) {
+HTMLElement.prototype.hide = function() {
+	this.style.display = "none";
+}
+
+HTMLFormElement.prototype.close = function() {
+	this.reset();
+	this.hide();
+	bookItems.parentElement.show();
+}
+
+function Book(title, author, pages, status, id) {
 	this.author = author;
 	this.pages = pages;
 	this.status = status;
 	this.title = title;
-	this.id = id || generateId();
+	this.id = id || this.generateId();
 };
 
 Book.prototype.toggleStatus = function() {
@@ -63,24 +68,24 @@ Book.prototype.toggleStatus = function() {
 	return this.status = "Read";
 };
 
-function render() {
-	const list = document.querySelector('.rendered-list');
-	list.innerHTML = "";
-	myLibrary.forEach(book => {
-		const element = document.createElement('li');
-		element.innerText = `${book.title}`;
-		list.appendChild(element);
-	});
+Book.prototype.generateId = function() {
+	if (sessionStorage.getItem("LIBRARY") === null || undefined) return 1;
+	if (JSON.parse(sessionStorage.getItem("LIBRARY")).length === 0) return 1;
+	const bookList = JSON.parse(sessionStorage.getItem("LIBRARY"));
+	const  lastBook = bookList[bookList.length -1];
+	const id = parseInt(lastBook.id) + 1;
+	return id;
 }
+
 
 function createBook(book) {
 	const div = document.createElement('div');
 	div.classList.add('book');
-	[div.dataset.author,
-	 div.dataset.pages,
-	 div.dataset.status,
-	 div.dataset.title,
-	 div.dataset.id] = Object.values(book);
+	[div.dataset.title, 
+		div.dataset.author,
+		div.dataset.pages,
+		div.dataset.status,
+		div.dataset.id] = Object.values(book);
 	const info = bookInfo(book);
 	const footer = bookFooter(book.status);
 	div.appendChild(info);
@@ -112,14 +117,14 @@ function bookFooter(status) {
 	const div = document.createElement('div');
 	div.classList.add('footer');
 	if (status == 'Read') {
-	  div.innerHTML = `
-		  <a class="btn status-btn read" href="#">Read</a>
-		  <a class="btn delete-btn" href="#"><i class="icon fas fa-trash-alt"></i></a> `;
-	  return div
+		div.innerHTML = `
+		<button class="btn status-btn read">Read</button>
+		<button class="btn delete-btn"><i class="icon fas fa-trash-alt"></i></button>`;
+		return div
 	}
 	div.innerHTML = `
-		<a class="btn status-btn not-read" href="#">Not Read</a>
-		<a class="btn delete-btn" href="#"><i class="icon fas fa-trash-alt"></i></a>`;
+	<button class="btn status-btn not-read" >Not Read</button>
+	<button class="btn delete-btn"><i class="icon fas fa-trash-alt"></i></button>`;
 	return div;
 }
 
@@ -128,16 +133,18 @@ function _delete(book) {
 	removeItem(parseInt(book.dataset.id));
 }
 
+function createItem(book) {	
+	const item = document.createElement('li');
+	item.innerText = `${book.title}`;
+	bookItems.appendChild(item);
+}
+
 function removeItem (id) {
+	bookItems.innerHTML = "";
 	myLibrary = myLibrary.filter(book => book.id !== id);
-}
-
-function show(element) {
-	element.style.display = 'flex';
-}
-
-function hide (element) {
-	element.style.display = 'none';
+	myLibrary.forEach(book => {
+		createItem(book)
+	})
 }
 
 function isEmptyString (element) {
@@ -154,39 +161,40 @@ function toggleStatusBtn(button) {
 	}
 }
 
-CARD.addEventListener('click', function(e) {
+function getFormValues(form) {
+	let inputs = form.elements;
+	inputs = Array.from(inputs);
+	inputs = inputs.filter(input => input.type != "submit")
+	inputs = inputs.map(input => input.value);
+	return inputs
+  }
+
+form.addEventListener('submit', function(e) {
+		e.preventDefault();
+		let values = getFormValues(form);
+		if ([...values].some(isEmptyString)) {
+			return alert('Missing Fields');
+		};
+		const book = new Book(...values);
+		myLibrary.push(book);
+		save();	
+		render();
+		form.close();
+	}) 
+
+goBackBtn.addEventListener('click', function(e) {
+	e.preventDefault();
+	form.close();
+})
+
+cardContent.addEventListener('click', function(e) {
 	if(e.target.classList.contains('add-book-btn')) {
-		show(FORM);
-		hide(LIST);	
+		form.show();
+		bookItems.parentElement.hide();	
 	}
 })
 
-FORM.addEventListener('submit', function(e) {
-	e.preventDefault();
-	const title = document.querySelector('.title').value;
-	const author = document.querySelector('.author').value;
-	const pages = document.querySelector('.pages').value;
-	const status = document.querySelector('.status').value;
-	if ([title, author, pages].some(isEmptyString)) {
-		return alert('Missing Fields');
-	};
-	const book = new Book(author, pages, status, title);
-	myLibrary.push(book);
-	addBook(book);
-	FORM.reset();
-	show(LIST);
-	hide(FORM);
-	save();	
-	render();
-}) 
-
-document.querySelector('.go-back-btn').addEventListener('click', function(e) {
-	FORM.reset();
-	show(LIST);
-	hide(FORM);	
-})
-
-document.querySelector('.book-list').addEventListener('click', function(e) {
+bookList.addEventListener('click', function(e) {
 	e.preventDefault();
 	if (e.target.classList.contains('delete-btn')) {
 		const book = e.target.parentElement.parentElement;
