@@ -17,15 +17,16 @@ window.addEventListener('load', function (e) {
 })
 
 function readStorage() {
-	if(!localStorage.getItem("LIBRARY")) return false
-	if(JSON.parse(localStorage.getItem("LIBRARY")).length == 0) return false;
-	let currentStorage = JSON.parse(localStorage.getItem("LIBRARY")).map(object => {
-		const {author, pages, status, title, id} = object;
-		const book = new Book(author, pages, status, title, id);
+	if(!sessionStorage.getItem("LIBRARY")) return false
+	if(JSON.parse(sessionStorage.getItem("LIBRARY")).length == 0) return false;
+	let currentStorage = JSON.parse(sessionStorage.getItem("LIBRARY")).map(object => {
+		const {title, author, pages, status, id} = object;
+		const book = new Book(title, author, pages, status, id);
 		return book;
 	});
 	return currentStorage;
 }
+
 function save() {
 	localStorage.setItem("LIBRARY", JSON.stringify(myLibrary));
 }
@@ -70,7 +71,7 @@ Book.prototype.generateId = function() {
 	if (localStorage.getItem("LIBRARY") === null || undefined) return 1;
 	if (JSON.parse(localStorage.getItem("LIBRARY")).length === 0) return 1;
 	const bookList = JSON.parse(localStorage.getItem("LIBRARY"));
-	const  lastBook = bookList[bookList.length -1];
+	const lastBook = bookList[bookList.length -1];
 	const id = parseInt(lastBook.id) + 1;
 	return id;
 }
