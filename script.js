@@ -7,14 +7,12 @@ const goBackBtn = document.querySelector('.go-back-btn');
 
 window.addEventListener('load', function (e) {
 	if (!localStorage.getItem("LIBRARY")) {
-		let firstBook = new Book('Marijn Haverbeke', '448', 'Read', 'Eloquent JavaScript');
+		let firstBook = new Book('Eloquent JavaScript', 'Marijn Haverbeke', '448', 'Read');
 		myLibrary.push(firstBook);
 		render();
 		save();
-		displayAll();
 	} else if (localStorage.getItem("LIBRARY")) {
 		render();
-		displayAll();
 	}	
 })
 
@@ -29,7 +27,7 @@ function readStorage() {
 	return currentStorage;
 }
 function save() {
-	sessionStorage.setItem("LIBRARY", JSON.stringify(myLibrary));
+	localStorage.setItem("LIBRARY", JSON.stringify(myLibrary));
 }
 
 function render() {
@@ -69,9 +67,9 @@ Book.prototype.toggleStatus = function() {
 };
 
 Book.prototype.generateId = function() {
-	if (sessionStorage.getItem("LIBRARY") === null || undefined) return 1;
-	if (JSON.parse(sessionStorage.getItem("LIBRARY")).length === 0) return 1;
-	const bookList = JSON.parse(sessionStorage.getItem("LIBRARY"));
+	if (localStorage.getItem("LIBRARY") === null || undefined) return 1;
+	if (JSON.parse(localStorage.getItem("LIBRARY")).length === 0) return 1;
+	const bookList = JSON.parse(localStorage.getItem("LIBRARY"));
 	const  lastBook = bookList[bookList.length -1];
 	const id = parseInt(lastBook.id) + 1;
 	return id;
