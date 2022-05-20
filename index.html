@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="main.css">
-  <link rel="stylesheet" href="css/all.css">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="/css/all.css">
   <link rel="preconnect" href="/https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap">
   <style>
     html {
-      background-image: url('images/background.jpg');
+      background-image: url('/images/background.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
@@ -19,20 +19,40 @@
   <title>Library App</title>
 </head>
 <body>
+  <div class="bg-overlay"></div>
+  <form id="pop-up-form" class="pop-up-form add-book-form" action="">
+    <h3 style="text-align: center;">Pop-up Form</h3>
+    <input type="text" class="title" placeholder="Title">
+    <input type="text" class="author" placeholder="Author">
+    <input type="number" class="pages" placeholder="Pages">
+    <select class="status">
+      <option value="Not Read">Not read</option>
+      <option value="Read">Read</option>
+    </select>
+    <div class="form-footer">
+      <button data-target-form="#pop-up-form" class="btn go-back-btn">
+        <i class="fas fa-undo-alt"></i>
+      </button>
+      <button type="submit" class="btn form-submit-btn">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+  </form>
   <div class="container">
     <div class="side-bar">
       <div class="wraper">
-        <div class="header">Library App</div>
+        <div class="header">
+          <span>Library App</span>
+          <span data-target-form="#pop-up-form" class="btn add-book-btn pop-up-btn">
+            <i data-target-form="#pop-up-form" class="fas fa-plus"></i>
+          </span>
+        </div>
         <div class="card-body">
-          <div class="card-header">Books</div>
-          <hr>
+          <div class="card-header">
+            <p>Books</p>
+          </div>
           <div class="card-content">
-            <div class ='list-container'>
-              <ul class="rendered-list">  
-              </ul>
-              <a href="#" class="btn add-book-btn">Add Book</a>
-            </div>
-            <form class="add-book-form" action="">
+            <form id="side-bar-form" class="add-book-form" action="">
               <input type="text" class="title" placeholder="Title">
               <input type="text" class="author" placeholder="Author">
               <input type="number" class="pages" placeholder="Pages">
@@ -41,10 +61,19 @@
                 <option value="Read">Read</option>
               </select>
               <div class="form-footer">
-                <a href="#" class="btn go-back-btn"><i class="fas fa-undo-alt"></i></a>
-                <button type="submit" class="btn form-submit-btn"><i class="fas fa-plus"></i></button>
+                <button data-target-form="#side-bar-form" class="btn go-back-btn">
+                  <i class="fas fa-undo-alt"></i>
+                </button>
+                <button type="submit" class="btn form-submit-btn">
+                  <i class="fas fa-plus"></i>
+                </button>
               </div>
             </form>
+            <div class='list-container'>
+              <ul class="rendered-list">  
+              </ul>
+              <button data-target-form="#side-bar-form" class="btn add-book-btn">Add Book</button>
+            </div>
           </div>
         </div>
       </div>
@@ -54,6 +83,6 @@
       </div>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script src="/script.js"></script>
 </body>
 </html>
